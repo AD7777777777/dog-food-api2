@@ -2,9 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS
+CORS(app, resources={r"/compare": {"origins": "*"}})  # Allow all origins for /compare
 
-# Debugging Route
 @app.route('/')
 def home():
     return "Dog Food API is running!"
@@ -23,9 +22,10 @@ def compare():
     ]
 
     response = jsonify(brands)
-    response.headers.add("Access-Control-Allow-Origin", "*")  # Allow Shopify to access
+    response.headers.add("Access-Control-Allow-Origin", "*")  # Allow requests from any website
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
     return response
-
 
 print("Available routes in Flask app:")
 for rule in app.url_map.iter_rules():
