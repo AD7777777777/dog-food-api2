@@ -24,5 +24,9 @@ def compare():
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
+print("Available routes:")
+for rule in app.url_map.iter_rules():
+    print(rule)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
