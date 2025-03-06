@@ -9,7 +9,6 @@ CORS(app)  # Enable CORS
 def home():
     return "Dog Food API is running!"
 
-# Comparison Route
 @app.route('/compare', methods=['POST'])
 def compare():
     data = request.json
@@ -24,8 +23,13 @@ def compare():
     ]
 
     response = jsonify(brands)
-    response.headers.add("Access-Control-Allow-Origin", "*")  # Enable CORS for all domains
+    response.headers.add("Access-Control-Allow-Origin", "*")  # Allow Shopify to access
     return response
+
+
+print("Available routes in Flask app:")
+for rule in app.url_map.iter_rules():
+    print(rule)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
